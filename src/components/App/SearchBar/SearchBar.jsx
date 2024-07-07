@@ -15,8 +15,8 @@ export default function SearchBar({ onSubmit }) {
         <form onSubmit={handleSubmit}>
     <input
       type="text"
-    //   autocomplete="off"
-    //   autofocus
+      // autocomplete="off"
+      // autofocus
                 placeholder="Search images and photos"
                 name="topic"
     />
@@ -24,3 +24,5 @@ export default function SearchBar({ onSubmit }) {
   </form>
 </header>
 }
+
+
