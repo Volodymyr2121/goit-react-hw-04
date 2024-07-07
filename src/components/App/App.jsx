@@ -6,7 +6,7 @@ import Loader from "./Loader/Loader";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./ImageModal/ImageModal";
-
+import {  toast, Toaster } from 'react-hot-toast';
 
 export default function App() {
   
@@ -31,7 +31,7 @@ export default function App() {
    const handleLoadMore = () => {
      setPage(page + 1)
        if (page >= totalPages) {
-      return"There is no more images to show!";
+      return toast.error("There is no more images to show!");
     }
   }
 
@@ -56,6 +56,9 @@ export default function App() {
         setError(false)
         const data = await fetchArtical(query, page);
         setTotalPages(data.total_pages);
+         if (data.length === 0) {
+          toast.error("No images found for your search query");
+        }
         setImages((prevImages) => [...prevImages, ...data]);
       } catch (error) {
           setError(true)
@@ -71,10 +74,11 @@ export default function App() {
 
   return (
     <div >
-        <h1>Image Gallery</h1>
+      <h1>Image Gallery</h1>
+      <Toaster />
         <SearchBar onSubmit={handleSearch} />
         {error && <ErrorMessage/>}
-      {<ImageGallery images={images} onImageClick={openModal}/>}
+      {<ImageGallery images={images} onImageClick={openModal} />}
         {loader && <Loader />}
         {images.length > 0 && <LoadMoreBtn onClick={handleLoadMore} />}
         <ImageModal

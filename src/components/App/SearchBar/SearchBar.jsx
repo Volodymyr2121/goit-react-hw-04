@@ -1,11 +1,18 @@
 import { IoIosSearch } from "react-icons/io";
 import css from "./SearchBar.module.css";
+import toast from 'react-hot-toast';
+
 
 export default function SearchBar({ onSubmit }) {
     
     const handleSubmit = event => {
         event.preventDefault();
         const topic = event.target.elements.topic.value;
+
+       if (topic.trim() === "") {
+      toast.error("Please enter a search term");
+      return;
+    }
        onSubmit(topic)
         event.target.reset();
 
@@ -21,7 +28,7 @@ export default function SearchBar({ onSubmit }) {
                 name="topic"
     />
             <button className={css.searchButton} type="submit"><IoIosSearch size={20}/></button>
-  </form>
+        </form>
 </header>
 }
 
